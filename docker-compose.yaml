@@ -1,0 +1,60 @@
+
+services:
+  keycloak: # https://hub.docker.com/r/bitnami/keycloak
+    image: quay.io/keycloak/keycloak
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KC_BOOTSTRAP_ADMIN_USERNAME}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_BOOTSTRAP_ADMIN_PASSWORD}
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres/keycloak
+      KC_DB_USERNAME: ${KC_DB_USERNAME}
+      KC_DB_PASSWORD: ${KC_DB_PASSWORD}
+      KC_HOSTNAME: ${KC_HOSTNAME}
+      KC_HTTPS_KEY_STORE_FILE: /opt/keycloak/data/privkey.pem
+      KC_HEALTH_ENABLED: true
+      KC_FEATURES: account-api:v1, account:v3, admin-api:v1, admin-fine-grained-authz:v1, admin:v2, authorization:v1, cache-embedded-remote-store:v1, ciba:v1, client-policies:v1, client-secret-rotation:v1, client-types:v1, clusterless:v1, declarative-ui:v1, device-flow:v1, docker:v1, dpop:v1, dynamic-scopes:v1, fips:v1, hostname:v2, impersonation:v1, kerberos:v1, login:v2,v1, multi-site:v1, oid4vc-vci:v1, opentelemetry:v1, organization:v1, par:v1, passkeys:v1, persistent-user-sessions:v1, preview, recovery-codes:v1, scripts:v1, step-up-authentication:v1, token-exchange:v1, transient-users:v1, update-email:v1, web-authn:v1
+    restart: always
+    volumes:
+      - /etc/letsencrypt/live/francl.in/privkey.pem:/opt/keycloak/data/privkey.pem:ro
+    healthcheck:
+      test: 
+        - CMD-SHELL
+        - curl
+        - -f
+        - https://localhost:9000/health
+      interval: 30s
+      timeout: 15s
+      retries: 5
+      start_period: 30s
+    networks:
+      database:
+      iam:
+        aliases:
+          - keycloak
+      gateway:
+        aliases:
+          - keycloak
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1024M
+      restart_policy:
+        condition: on-failure
+
+networks:
+  iam:
+    name: iam
+    attachable: true
+    enable_ipv6: true
+  gateway:
+    external: true
+    enable_ipv6: true
+  database:
+    external: true
+    enable_ipv6: true
+
+volumes:
+  keycloak:
+    name: keycloak
