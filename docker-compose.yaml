@@ -3,7 +3,7 @@ services:
   keycloak: # https://hub.docker.com/r/bitnami/keycloak
     image: quay.io/keycloak/keycloak
     restart: always
-    command: start --optimized
+    command: start
     volumes:
       - /etc/letsencrypt/live/francl.in/privkey.pem:/opt/keycloak/data/privkey.pem:ro
       - /etc/letsencrypt/live/francl.in/fullchain.pem:/opt/keycloak/data/fullchain.pem:ro
