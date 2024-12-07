@@ -19,5 +19,5 @@ jobs:
         export KC_HOSTNAME="${{ secrets.KC_HOSTNAME }}"
     with:
       docker_compose_project_name: iam
-      docker_compose_recreate: false
+      docker_compose_recreate: true
       destroy: false
