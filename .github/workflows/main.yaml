@@ -12,11 +12,11 @@ jobs:
       ssh_key: ${{ secrets.SSH_KEY }}
       ssh_host: ${{ secrets.SSH_HOST }}
       docker_compose_envs: |
-        export KC_BOOTSTRAP_ADMIN_USERNAME=${{ secrets.KC_BOOTSTRAP_ADMIN_USERNAME }}
-        export KC_BOOTSTRAP_ADMIN_PASSWORD=${{ secrets.KC_BOOTSTRAP_ADMIN_PASSWORD }}
-        export KC_DB_USERNAME=${{ secrets.KC_DB_USERNAME }}
-        export KC_DB_PASSWORD=${{ secrets.KC_DB_PASSWORD }}
-        export KC_HOSTNAME=${{ secrets.KC_HOSTNAME }}
+        export KC_BOOTSTRAP_ADMIN_USERNAME="${{ secrets.KC_BOOTSTRAP_ADMIN_USERNAME }}"
+        export KC_BOOTSTRAP_ADMIN_PASSWORD="${{ secrets.KC_BOOTSTRAP_ADMIN_PASSWORD }}"
+        export KC_DB_USERNAME="${{ secrets.KC_DB_USERNAME }}"
+        export KC_DB_PASSWORD="${{ secrets.KC_DB_PASSWORD }}"
+        export KC_HOSTNAME="${{ secrets.KC_HOSTNAME }}"
     with:
       docker_compose_project_name: iam
       docker_compose_recreate: false
