@@ -5,8 +5,8 @@ services:
     restart: always
     command: start
     volumes:
-      - /etc/letsencrypt/archive/francl.in/privkey1.pem:/opt/keycloak/data/privkey.pem:ro
-      - /etc/letsencrypt/archive/francl.in/fullchain1.pem:/opt/keycloak/data/fullchain.pem:ro
+      - /etc/letsencrypt/live/francl.in/privkey.pem:/opt/keycloak/data/privkey.pem
+      - /etc/letsencrypt/live/francl.in/fullchain.pem:/opt/keycloak/data/fullchain.pem
     healthcheck:
       test: 
         - CMD-SHELL
