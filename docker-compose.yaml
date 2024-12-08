@@ -1,22 +1,12 @@
 
 services:
   keycloak: # https://hub.docker.com/r/bitnami/keycloak
-    image: quay.io/keycloak/keycloak
+    image: keycloak/keycloak
     restart: always
     command: start --verbose
     volumes:
-      - /etc/letsencrypt/live/francl.in:/etc/letsencrypt/live/francl.in
-      - /etc/letsencrypt/archive/francl.in:/etc/letsencrypt/archive/francl.in
-    healthcheck:
-      test: 
-        - CMD-SHELL
-        - curl
-        - -f -k
-        - https://localhost:9000/health
-      interval: 30s
-      timeout: 15s
-      retries: 5
-      start_period: 30s
+      - /etc/letsencrypt/live/francl.in:/etc/letsencrypt/live/francl.in:ro
+      - /etc/letsencrypt/archive/francl.in:/etc/letsencrypt/archive/francl.in:ro
     networks:
       database:
       iam:

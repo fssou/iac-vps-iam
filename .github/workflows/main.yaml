@@ -1,4 +1,4 @@
-name: Deployment Database Postgres
+name: Deployment IAM
 
 on:
   push:
