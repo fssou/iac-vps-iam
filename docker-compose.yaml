@@ -3,9 +3,14 @@ services:
   keycloak: # https://hub.docker.com/r/bitnami/keycloak
     image: quay.io/keycloak/keycloak
     restart: always
-    command: start --verbose
+    command: |
+      cp -L /etc/letsencrypt/live/francl.in/privkey.pem /etc/ssl/private/privkey.pem
+      chmod 600 /etc/ssl/private/privkey.pem
+      cp -L /etc/letsencrypt/live/francl.in/fullchain.pem /etc/ssl/certs/fullchain.pem
+      chmod 600 /etc/ssl/certs/fullchain.pem
+      start --verbose
     volumes:
-      - /etc/letsencrypt/live/francl.in:/etc/letsencrypt/live/francl.in
+      - /etc/letsencrypt/live/francl.in:/etc/letsencrypt/live/francl.in:ro
       - /etc/letsencrypt/archive/francl.in:/etc/letsencrypt/archive/francl.in:ro
     healthcheck:
       test: 
@@ -35,8 +40,8 @@ services:
       KC_DB_USERNAME: ${KC_DB_USERNAME}
       KC_DB_PASSWORD: ${KC_DB_PASSWORD}
       KC_HOSTNAME: ${KC_HOSTNAME}
-      KC_HTTPS_CERTIFICATE_KEY_FILE: /etc/letsencrypt/live/francl.in/privkey.pem
-      KC_HTTPS_CERTIFICATE_FILE: /etc/letsencrypt/live/francl.in/fullchain.pem
+      KC_HTTPS_CERTIFICATE_KEY_FILE: /etc/ssl/private/privkey.pem
+      KC_HTTPS_CERTIFICATE_FILE: /etc/ssl/certs/fullchain.pem
       KC_HEALTH_ENABLED: true
       # KC_FEATURES: account-api:v1,account:v3,admin-api:v1,admin:v2,authorization:v1,ciba:v1,client-policies:v1,device-flow:v1,docker:v1,hostname:v2,impersonation:v1,kerberos:v1,login:v2,multi-site:v1,organization:v1,par:v1,persistent-user-sessions:v1,preview,step-up-authentication:v1,web-authn:v1
     deploy:
