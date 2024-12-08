@@ -2,7 +2,6 @@
 services:
   keycloak: # https://hub.docker.com/r/bitnami/keycloak
     image: keycloak/keycloak
-    restart: always
     command: start --verbose
     volumes:
       - /etc/letsencrypt/live/francl.in:/etc/letsencrypt/live/francl.in:ro
@@ -36,6 +35,9 @@ services:
         limits:
           cpus: '1'
           memory: 1024M
+      placement:
+        constraints:
+          - node.role == manager
       restart_policy:
         condition: on-failure
 
