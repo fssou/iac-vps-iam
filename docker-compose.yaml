@@ -2,7 +2,7 @@
 services:
   keycloak: # https://hub.docker.com/r/bitnami/keycloak
     image: keycloak/keycloak
-    command: start --verbose
+    command: start --verbose --log-level="org.keycloak.broker.oidc:DEBUG,org.keycloak.broker.provider:DEBUG"
     volumes:
       - /etc/letsencrypt/live/francl.in:/etc/letsencrypt/live/francl.in:ro
       - /etc/letsencrypt/archive/francl.in:/etc/letsencrypt/archive/francl.in:ro
