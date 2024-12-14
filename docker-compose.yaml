@@ -2,7 +2,7 @@
 services:
   keycloak: # https://hub.docker.com/r/bitnami/keycloak
     image: keycloak/keycloak
-    command: start --verbose --log-level="ALL"
+    command: start --verbose
     volumes:
       - /etc/letsencrypt/live/francl.in:/etc/letsencrypt/live/francl.in:ro
       - /etc/letsencrypt/archive/francl.in:/etc/letsencrypt/archive/francl.in:ro
